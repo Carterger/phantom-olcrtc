@@ -83,7 +83,7 @@ async function startServer() {
     try {
       const client = demoDb.prepare('SELECT * FROM clients WHERE id = ?').get(req.params.id) as any;
       if (!client) return res.status(404).json({ error: 'Not found' });
-      const link = \`olcrtc://wbstream?vp8channel@\${client.olcrtc_id}#\${client.olcrtc_key}%\${client.olcrtc_client_id}$OlcRTC\`;
+      const link = `olcrtc://wbstream?vp8channel@${client.olcrtc_id}#${client.olcrtc_key}%${client.olcrtc_client_id}$OlcRTC`;
       res.json({ link });
     } catch (err: any) {
       res.status(500).json({ error: err.message });
