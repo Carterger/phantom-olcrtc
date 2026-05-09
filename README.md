@@ -1,4 +1,5 @@
-<img width="677" height="369" alt="logo" src="https://github.com/user-attachments/assets/0f3b6924-f2bc-497e-87b3-602cd317ec78" />
+<img width="1408" height="768" alt="logo" src="https://github.com/user-attachments/assets/0dbd3e51-2059-4b79-acdd-8faa97cc26ac" />
+
 
 # 👻 Phantom
 
