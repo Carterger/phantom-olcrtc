@@ -1,3 +1,5 @@
+<img width="677" height="369" alt="logo" src="https://github.com/user-attachments/assets/0f3b6924-f2bc-497e-87b3-602cd317ec78" />
+
 # 👻 Phantom
 
 > VPN-менеджер с маскировкой трафика под видеозвонок Wildberries
