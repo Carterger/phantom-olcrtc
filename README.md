@@ -1,20 +1,113 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 👻 Phantom
 
-# Run and deploy your AI Studio app
+> VPN-менеджер с маскировкой трафика под видеозвонок Wildberries
 
-This contains everything you need to run your app locally.
+Phantom позволяет поднять собственный VPN-сервер и управлять подключениями через удобную панель. Трафик маскируется под видеозвонок Wildberries — один из самых надёжных способов обхода блокировок в России.
 
-View your app in AI Studio: https://ai.studio/apps/f7c84916-1842-4b10-a2ba-ccfb8678afc7
+---
 
-## Run Locally
+## Как это работает
 
-**Prerequisites:**  Node.js
+```
+Телефон/ПК → Wildberries CDN (маскировка) → Ваш сервер → Интернет
+```
 
+Провайдер видит только подключение к серверам Wildberries. Реальный трафик спрятан внутри имитации видеозвонка через протокол OlcRTC.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+
+## Быстрый старт
+
+### 1. Установка на сервер (одна команда)
+
+Подключитесь к вашему VPS и выполните:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/Carterger/phantom-olcrtc/main/install.sh)
+```
+
+> Требования: Ubuntu 22.04, минимум 1GB RAM, 10GB диска
+
+### 2. Скачать приложение
+
+Скачайте Phantom для вашей платформы и запустите.
+
+При первом запуске:
+- Введите IP вашего сервера
+- Введите SSH пароль
+- Нажмите **Установить сервер**
+- Дождитесь установки (10-15 минут — идёт сборка OlcRTC)
+
+### 3. Создать подключение для пользователя
+
+- Нажмите **+ Создать клиента**
+- Введите имя (например `MAMA`)
+- Нажмите **Создать**
+- Отправьте QR-код или ссылку пользователю
+
+### 4. Подключиться
+
+Пользователь устанавливает [Olcbox](https://github.com/openlibrecommunity/olcbox) и сканирует QR-код.
+
+---
+
+## Требования к серверу
+
+| Параметр | Минимум |
+|----------|---------|
+| ОС | Ubuntu 22.04 |
+| RAM | 1 GB |
+| Диск | 10 GB |
+| Расположение | За пределами РФ |
+
+Каждый клиент использует ~20MB RAM. На 1GB сервере комфортно работают 20-30 клиентов.
+
+---
+
+## Стек
+
+- **Панель управления** — React + Vite
+- **Сервер** — Node.js + Express + SQLite
+- **Установка** — node-ssh (реальное SSH подключение)
+- **Туннель** — [OlcRTC](https://github.com/openlibrecommunity/olcrtc)
+
+---
+
+## Структура проекта
+
+```
+phantom/
+├── src/                  # React фронтенд (панель управления)
+│   └── App.tsx
+├── server.ts             # Локальный сервер (SSH установка + демо)
+├── remote-server.js      # Сервер который ставится на VPS
+├── install.sh            # Установка одной командой
+└── README.md
+```
+
+---
+
+## Разработка
+
+```bash
+git clone https://github.com/Carterger/phantom-olcrtc
+cd phantom-olcrtc
+npm install
+npm run dev
+```
+
+---
+
+## Планы
+
+- [ ] Мобильный клиент Android (системный VPN)
+- [ ] Мобильный клиент iOS
+- [ ] Режим пользователя (просто VPN без настройки)
+- [ ] Статистика трафика в реальном времени
+- [ ] Автоматическое обновление ссылок при смене IP
+
+---
+
+## Лицензия
+
+MIT
