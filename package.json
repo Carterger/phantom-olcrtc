@@ -1,15 +1,12 @@
 {
-  "name": "react-example",
+  "name": "Phantom",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "main": "main.js",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "tsx server.ts",
-    "start": "tsx server.ts",
-    "build": "vite build",
-    "preview": "vite preview",
-    "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "dev": "concurrently \"cross-env NODE_ENV=development tsx server.js\" \"cross-env NODE_ENV=development electron .\"",
+    "start": "electron .",
+    "build": "vite build && electron-builder"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",
@@ -25,10 +22,41 @@
     "qrcode.react": "^4.2.0",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
+    "react-hot-toast": "^2.6.0",
     "recharts": "^3.8.1",
     "ssh2": "^1.17.0",
     "uuid": "^14.0.0",
-    "vite": "^6.2.3"
+    "vite": "^6.2.3",
+    "winreg": "^1.2.5"
+  },
+  "build": {
+    "appId": "com.phantom.app",
+    "productName": "Phantom",
+    "npmRebuild": false,
+    "directories": {
+      "output": "dist_electron"
+    },
+    "files": [
+      "dist/**/*",
+      "main.js",
+      "icon.png"
+    ],
+    "extraResources": [
+      "olcrtc-windows-amd64.exe",
+      "tun2socks-windows-amd64.exe",
+      "wintun.dll",
+      "icon.png",
+      "server.ts"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "icon.png",
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
@@ -37,9 +65,14 @@
     "@types/ssh2": "^1.15.5",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^42.0.1",
+    "electron-builder": "^26.8.1",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
-    "vite": "^6.2.3"
+    "vite": "^6.2.3",
+    "wait-on": "^9.0.6"
   }
 }
