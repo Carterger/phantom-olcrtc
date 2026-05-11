@@ -101,8 +101,11 @@ chmod +x /opt/olcrtc/olcrtc-linux-amd64
 rm -rf /tmp/olcrtc
 echo -e "${GREEN}✓ OlcRTC собран и установлен${NC}"
 
+# Очистка старой базы и фикс имени файла
+rm -f /opt/phantom/phantom.db
+mv /opt/phantom/server.js /opt/phantom/remote-server.js 2>/dev/null || true
+
 # Создание systemd службы
-echo -e "\n⏳ Создание службы Phantom..."
 cat > /etc/systemd/system/phantom.service << EOF
 [Unit]
 Description=Phantom VPN Manager
@@ -110,7 +113,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/opt/phantom
-ExecStart=/usr/bin/node server.js
+ExecStart=/usr/bin/node remote-server.js
 Restart=always
 RestartSec=5
 Environment=NODE_ENV=production
@@ -119,9 +122,10 @@ Environment=NODE_ENV=production
 WantedBy=multi-user.target
 EOF
 
+chmod -R 777 /opt/phantom
 systemctl daemon-reload
-systemctl enable phantom > /dev/null 2>&1
-systemctl start phantom
+systemctl enable phantom
+systemctl restart phantom
 echo -e "${GREEN}✓ Служба Phantom запущена${NC}"
 
 # Получить IP сервера
