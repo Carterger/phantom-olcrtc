@@ -34,7 +34,7 @@ echo -e "${GREEN}✓ Система обновлена${NC}"
 
 # Установка зависимостей
 echo -e "\n⏳ Установка зависимостей..."
-apt-get install -y curl wget git > /dev/null 2>&1
+apt-get install -y curl wget git build-essential python3 make g++ pkg-config > /dev/null 2>&1
 echo -e "${GREEN}✓ Зависимости установлены${NC}"
 
 # Установка Node.js 20
